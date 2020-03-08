@@ -33,36 +33,36 @@ module ``07: The Good Kind of Discrimination`` =
         let aDegree = BSc (Linguistics, ComputerScience)
         let anotherDegree = BPharm
         let philosopherKing = Masters Philosophy
-        aDegree |> should be ofType<FILL_ME_IN> 
-        anotherDegree |> should be ofType<FILL_ME_IN> 
-        philosopherKing |> should be ofType<FILL_ME_IN> 
+        aDegree |> should be ofType<UndergraduateDegree> 
+        anotherDegree |> should be ofType<UndergraduateDegree> 
+        philosopherKing |> should be ofType<PostgraduateDegree> 
    
     [<Test>]
     let ``02 Creating & pattern-matching a discriminated union`` () = 
         let randomOpinion degree =
             match degree with
-            | BSc (_, ComputerScience) | BSc (ComputerScience, _) -> "Good choice!"
+            | BSc (Mathematics, ComputerScience) | BSc (ComputerScience, Mathematics) -> "Good choice!"
             | BSc _ -> "!!SCIENCE!!"
             | BPharm -> "Meh, it's OK."
-            | FILL_ME_IN -> "Money, money, money."
-            | FILL_ME_IN -> "A thinker, eh?"
-        randomOpinion __ |> should equal "Good choice!"
-        randomOpinion __ |> should equal "!!SCIENCE!!"
+            | BCom (Economics, Management) | BCom (Management, Economics) | BCom (_, Economics) | BCom (Economics, _) -> "Money, money, money."
+            | BA (Philosophy, _) | BA ( _, Philosophy) -> "A thinker, eh?"
+        randomOpinion (BSc (Mathematics, ComputerScience)) |> should equal "Good choice!"
+        randomOpinion (BSc (Mathematics, Economics)) |> should equal "!!SCIENCE!!"
         randomOpinion (BCom (Management, Economics)) |> should equal "Money, money, money."
         randomOpinion (BCom (Linguistics, Management)) |> should equal "Money, money, money."
         randomOpinion (BA (Linguistics, Philosophy)) |> should equal "A thinker, eh?"
-        randomOpinion __ |> should equal "Meh, it's OK."
+        randomOpinion (BPharm) |> should equal "Meh, it's OK."
 
     [<Test>]
     let ``03 We can create a discriminated union using named fields`` () =
-        let someDegree = BSc (second = __, first = __)            
+        let someDegree = BSc (second = Mathematics, first = ComputerScience)            
         someDegree |> should equal (BSc (ComputerScience, Mathematics))
 
     [<Test>]
     let ``04 Pattern-matching using named fields`` () =
         let result =
             match BSc (Management, ComputerScience) with
-            | FILL_ME_IN -> "correct" // <-- USE a pattern-match with named fields!
+            | BSc (Management, ComputerScience) -> "correct" // <-- USE a pattern-match with named fields!
             | _ -> "nope"
         result |> should equal "correct"
 
@@ -73,8 +73,8 @@ module ``07: The Good Kind of Discrimination`` =
 
     [<Test>]
     let ``05 A discriminated union case with associated data is a function`` () =
-        Broken |> should be ofType<FILL_ME_IN>
-        Rented |> should be ofType<FILL_ME_IN>
+        Broken |> should be ofType<int->EquipmentStatus>
+        Rented |> should be ofType<string -> EquipmentStatus>
 
     type BinaryTree =
     | Empty

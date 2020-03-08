@@ -101,7 +101,7 @@ module ``04: Match expressions`` =
         let f input =
             match input with
             | 0,0 -> "Both 0"
-            | 3,0 | 4,0 -> sprintf "One 0, one %d" __
+            | (a,0) | (0,a) -> sprintf "One 0, one %d" a
             | _ -> "No 0"
         f (3,0) |> should equal "One 0, one 3"
         f (0, 4) |> should equal "One 0, one 4"
