@@ -393,8 +393,8 @@ module ``03: Putting the Function into Functional Programming`` =
             let middle = (final - initial) / 2
             fun t -> t-middle, t+middle
         // note the number of inputs provided below.  Do you see why I can do this?
-        calculate 10 20 5 |> should equal __
-        calculate 0 600 250 |> should equal __
+        calculate 10 20 5 |> should equal  (0, 10)
+        calculate 0 600 250 |> should equal (-50, 550)
 
     [<Test>]
     let ``36 Using a value defined in an inner scope`` () =
@@ -402,8 +402,8 @@ module ``03: Putting the Function into Functional Programming`` =
         let g t =
             let result = ((t%2)+1) * 10
             fun x -> result - x
-        g 5 8 |> should equal 30
-        g 8 5 |> should equal 45
+        g 5 8 |> should equal 12
+        g 8 5 |> should equal 5
         // PS. I hope this one brought you some closure.
 
     [<Test>]
