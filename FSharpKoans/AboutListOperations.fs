@@ -50,7 +50,7 @@ module ``12: List operations are so easy, you could make them yourself!`` =
             let rec reve lst1 lst2 =
                 match lst1 with
                 |[] -> lst2
-                |a::rest -> reve rest (lst2 @ [a])
+                |a::rest -> reve rest (a::lst2)
             reve xs []  // write a function to reverse a list here.
         rev [9;8;7] |> should equal [7;8;9]
         rev [] |> should equal []
@@ -71,7 +71,7 @@ module ``12: List operations are so easy, you could make them yourself!`` =
             let rec mapp lst1 lst2 =
                 match lst1 with 
                 |[] -> lst2
-                |a::rest -> mapp rest ((a + 1)::lst2)
+                |a::rest -> mapp rest (lst2 @ [a + 1])
             mapp xs [] // write a function which adds 1 to each element
         map [1; 2; 3; 4] |> should equal [2; 3; 4; 5]
         map [9; 8; 7; 6] |> should equal [10; 9; 8; 7]
@@ -85,7 +85,7 @@ module ``12: List operations are so easy, you could make them yourself!`` =
             let rec mapp lst1 lst2 =
                 match lst1 with 
                 |[] -> lst2
-                |a::rest -> mapp rest ((a * 2)::lst2)
+                |a::rest -> mapp rest (lst2 @ [(a * 2)])
             mapp xs [] // write a function which doubles each element
         map [1; 2; 3; 4] |> should equal [2; 4; 6; 8]
         map [9; 8; 7; 6] |> should equal [18; 16; 14; 12]
@@ -108,7 +108,7 @@ module ``12: List operations are so easy, you could make them yourself!`` =
             let rec mapp fn lst1 lst2 =
                 match lst1 with 
                 |[] -> lst2
-                |a::rest -> mapp rest (fn a ::lst2)
+                |a::rest -> mapp rest (lst2 @ [fn a])
             mapp f xs [] // write a map which applies f to each element
         map (fun x -> x+1) [9;8;7] |> should equal [10;9;8]
         map ((*) 2) [9;8;7] |> should equal [18;16;14]
