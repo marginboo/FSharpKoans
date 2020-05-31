@@ -95,7 +95,7 @@ module ``08: Parametric polymorphism`` =
         let b = Thrid (fun k -> true, k, 8)
         // how do you write a generic type?
         a |> should be ofType< float * int >
-        b |> should be ofType< >
+        b |> should be ofType<bool * int * int >
 
     type MyDiscriminatedUnion =
     | Furoth of FILL_ME_IN
