@@ -75,7 +75,7 @@ module ``08: Parametric polymorphism`` =
         // `id` is the identify function: it takes an input ... and gives it back immediately.
         id 8 |> should equal 8
         id 7.6 |> should equal 7.6
-        id "wut!" |> should equal "wut"
+        id "wut!" |> should equal "wut!"
         // id can be surprisingly useful.  Remember it :).
 
     [<Test>]
@@ -94,21 +94,21 @@ module ``08: Parametric polymorphism`` =
         let a = Secnod (6.55, 7)
         let b = Thrid (fun k -> true, k, 8)
         // how do you write a generic type?
-        a |> should be ofType< float * int >
-        b |> should be ofType<bool * int * int >
+        a |> should be ofType< GenericDiscriminatedUnionExample< float , int >>
+        b |> should be ofType< GenericDiscriminatedUnionExample<'a , bool> >
 
-    type MyDiscriminatedUnion =
-    | Furoth of FILL_ME_IN
+    type MyDiscriminatedUnion <'a,'b> =
+    | Furoth of 'a
     | Fevi
-    | Sxi of FILL_ME_IN
+    | Sxi of 'b
 
     [<Test>]
     let ``05 Creating a generic discriminated union (Part 2).`` () =
         // You need to edit the definition of MyDiscriminatedUnion first!  It's just above this test.
-        let a = __
-        let b = __
-        let c = __
-        let d = __
+        let a = Furoth 7
+        let b = Sxi "bleh"
+        let c = Furoth 't'
+        let d = Sxi true
         match a with
         | Furoth n -> n |> should equal 7
         | _ -> Assert.Fail ()

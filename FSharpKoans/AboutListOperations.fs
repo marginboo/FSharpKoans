@@ -357,7 +357,7 @@ or something else), it's likely that you'll be able to use a fold.
                 |[] -> lst1
                 |a::rest -> match b a with 
                             | None -> pick b rest lst1
-                            | _ -> pick b rest (lst1 @ [a])
+                            | Some a -> pick b rest (lst1 @ [a])
             pick p xs []  
              // Does this: https://msdn.microsoft.com/en-us/visualfsharpdocs/conceptual/list.choose%5b't,'u%5d-function-%5bfsharp%5d
         let f x =
@@ -377,13 +377,12 @@ or something else), it's likely that you'll be able to use a fold.
     [<Test>]
     let ``22 mapi: like map, but passes along an item index as well`` () =
         let mapi (f : int -> 'a -> 'b) (xs : 'a list) : 'b list =
-            let rec mapp fn lst lst1 =
+            let rec mapp lst cnt lst1 =
                 match lst with
                 |[] -> lst1
-                |a::rest -> let v = fn a 
-                            let c = lst1 
-                            mapp fn rest c 
-            mapp f xs []     
+                |a::rest -> let v = f cnt a  
+                            mapp rest (cnt + 1) (lst1 @[v]) 
+            mapp xs 0 []     
          // Does this: https://msdn.microsoft.com/en-us/visualfsharpdocs/conceptual/list.mapi%5b't,'u%5d-function-%5bfsharp%5d
         mapi (fun i x -> -i, x+1) [9;8;7;6] |> should equal [0,10; -1,9; -2,8; -3,7]
         let hailstone i t =

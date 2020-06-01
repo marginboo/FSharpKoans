@@ -35,8 +35,8 @@ module ``10: I Have Here In My Hand A List`` =
         let first = [ "grape"; "peach" ]
         let second = "pear" :: first
         let third = "apple" :: second
-        third |> should equal [ "grape"; "peach" ; "pear" ; "apple"]
-        second |> should equal [ "grape"; "peach" ; "pear"]
+        third |> should equal [ "apple";"pear";"grape";"peach"]
+        second |> should equal [ "pear";"grape"; "peach" ]
         first |> should equal [ "grape"; "peach" ]
 
     [<Test>]
@@ -90,7 +90,7 @@ module ``10: I Have Here In My Hand A List`` =
         o |> should equal "peach"
         p |> should equal "watermelon"
         q |> should equal "pineapple"
-        r |> should equal "tamato"
+        r |> should equal "tomato"
 
     [<Test>]
     let ``12 Pattern-matching a list (Part 8).`` () =
